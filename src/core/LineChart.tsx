@@ -92,15 +92,9 @@ const LineChart = (props: IProps) => {
       : []
 
   const formatTooltip = (lines: { name: string; seriesName: string; value: number }[]) => {
-    const takeComplement = (value: number) =>
-      yType === 'time' ? timeConvert(Number(value)) + 'h' : takeLabelComplement(Number(value), yComplement)
+    const linesTooltips = lines.map(line => line.seriesName + ': ' + line.value + '<br>')
 
-    const linesTooltips = lines.map(line => line.seriesName + ': ' + takeComplement(Number(line.value)) + '<br>')
-
-    const tooltipTitle =
-      xType === 'time'
-        ? formatTime(dateFormat === 'yyyy-MM' ? lines[0].name + '-02' : lines[0].name, dateFormat === 'yyyy-MM' ? 'MMM/yy' : 'dd MMM')
-        : lines[0].name
+    const tooltipTitle = lines[0].name
 
     return `${tooltipTitle} <br> ${linesTooltips.join(' ')}`
   }

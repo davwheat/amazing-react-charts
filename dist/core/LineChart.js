@@ -108,14 +108,10 @@ var LineChart = function LineChart(props) {
   }] : [];
 
   var formatTooltip = function formatTooltip(lines) {
-    var takeComplement = function takeComplement(value) {
-      return yType === 'time' ? (0, _auxiliarFunctions.timeConvert)(Number(value)) + 'h' : (0, _auxiliarFunctions.takeLabelComplement)(Number(value), yComplement);
-    };
-
     var linesTooltips = lines.map(function (line) {
-      return line.seriesName + ': ' + takeComplement(Number(line.value)) + '<br>';
+      return line.seriesName + ': ' + line.value + '<br>';
     });
-    var tooltipTitle = xType === 'time' ? (0, _auxiliarFunctions.formatTime)(dateFormat === 'yyyy-MM' ? lines[0].name + '-02' : lines[0].name, dateFormat === 'yyyy-MM' ? 'MMM/yy' : 'dd MMM') : lines[0].name;
+    var tooltipTitle = lines[0].name;
     return "".concat(tooltipTitle, " <br> ").concat(linesTooltips.join(' '));
   };
 

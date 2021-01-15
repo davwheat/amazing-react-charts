@@ -1,9 +1,3 @@
-/node_modules
-/lib
-/.docz
-/build
-docs
-yarn-error.log
-*.tgz
-/public
-/dist
+node_modules
+dist
+.vscode

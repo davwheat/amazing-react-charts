@@ -1,4 +1,3 @@
-import { formatToBRL } from 'brazilian-values'
 import { format, parse } from 'date-fns'
 import { takeLast } from 'ramda'
 import ptBR from 'date-fns/locale/pt-BR'
@@ -12,127 +11,84 @@ type TConnectedDataURL = {
 }
 
 const DOWNLOAD_ICON =
-  'path://M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 ' +
-  '.67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z'
+  'path://M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 ' + '.67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z'
 
 const iconStyle = {
   color: '#152849',
   borderColor: '#152849',
-  borderWidth: 0.1
+  borderWidth: 0.1,
 }
 
 export const takeLabelComplement = (item: number, complement: string) => {
-  const getComplement = complement
-    ? formatValueAxis(item, complement)
-    : item
+  const getComplement = complement ? formatValueAxis(item, complement) : item
 
-  return complement === 'money'
-    ? formatToBRL(item)
-    : getComplement
+  return complement === getComplement
 }
 
-export const takeDonutComplement = (item: number, complement?: string) =>
-  item === 0 ? '' : item + (complement || '')
+export const takeDonutComplement = (item: number, complement?: string) => (item === 0 ? '' : item + (complement || ''))
 
 export const timeConvert = (value: number) => {
   const seconds = Math.round((value % 1) * 3600)
   const minutes = Math.trunc(seconds / 60)
   const formatedMinutes = takeLast(2, '0' + minutes)
 
-  return minutes > 0
-    ? Math.floor(value) + ':' + formatedMinutes
-    : Math.floor(value) + ':00'
+  return minutes > 0 ? Math.floor(value) + ':' + formatedMinutes : Math.floor(value) + ':00'
 }
 
 export const formatValueAxis = (value: number, complement: string) => {
-  const getTime = complement === 'time'
-    ? timeConvert(value)
-    : value + complement
+  const getTime = complement === 'time' ? timeConvert(value) : value + complement
 
-  return complement === '%' || complement === 'percent'
-    ? (value.toFixed(2) + '%').replace('.', ',')
-    : getTime
+  return complement === '%' || complement === 'percent' ? (value.toFixed(2) + '%').replace('.', ',') : getTime
 }
 
-export const takeComplement = (data: string | number, complement: string) =>
-  complement === 'money'
-    ? ': ' + formatToBRL(data) + '<br>'
-    : ': ' + data + complement + '<br>'
+export const takeComplement = (data: string | number, complement: string) => ': ' + data + complement + '<br>'
 
-export const getPercentage = (value: number, valueTotal: number) =>
-  value !== 0 ? (value * (100 / valueTotal)).toFixed(2) : '0'
+export const getPercentage = (value: number, valueTotal: number) => (value !== 0 ? (value * (100 / valueTotal)).toFixed(2) : '0')
 
-export const moneyPercent = (
-  value: number,
-  valueTotal: number,
-  sumDataValues?: boolean
-) => {
+export const moneyPercent = (value: number, valueTotal: number, sumDataValues?: boolean) => {
   const percent = getPercentage(value, valueTotal)
 
-  return sumDataValues
-    ? formatToBRL(value) + ' (' + percent + '%) <br>'
-    : formatToBRL(value) + '<br>'
+  return percent
 }
 
-export const monuntTimeMessage = (
-  item: TDataTooltip,
-  stackedValues: number
-) => {
+export const monuntTimeMessage = (item: TDataTooltip, stackedValues: number) => {
   const time = timeConvert(Number(item.value))
-  const percent = item.value !== 0 
-    ? getPercentage((Number(item.value)), stackedValues)
-    : '0'
+  const percent = item.value !== 0 ? getPercentage(Number(item.value), stackedValues) : '0'
 
   return item.seriesName + ': ' + time + ' (' + percent + '%) <br>'
 }
 
-export const mountMessage = (
-  value: TDataTooltip,
-  complement: string,
-  axisType: string,
-  stackedValues: number,
-  sumDataValues: boolean
-) => {
+export const mountMessage = (value: TDataTooltip, complement: string, axisType: string, stackedValues: number, sumDataValues: boolean) => {
   const seriesLabel = value.marker + value.seriesName
-  const moneyValue =
-    moneyPercent(Number(value.data), stackedValues, sumDataValues)
+  const moneyValue = moneyPercent(Number(value.data), stackedValues, sumDataValues)
 
-  const isPercentage = axisType === 'percent' || complement === '%'
-    ? seriesLabel + ': ' + (
-      formatValueAxis(Number(value.data), '%') + '<br>'
-    )
-    : seriesLabel + takeComplement(value.data, complement)
+  const isPercentage =
+    axisType === 'percent' || complement === '%'
+      ? seriesLabel + ': ' + (formatValueAxis(Number(value.data), '%') + '<br>')
+      : seriesLabel + takeComplement(value.data, complement)
 
-  return complement === 'money' && value.seriesType !== 'line'
-    ? seriesLabel + ': ' + moneyValue
-    : isPercentage
+  return complement === 'money' && value.seriesType !== 'line' ? seriesLabel + ': ' + moneyValue : isPercentage
 }
 
-export const toDate = (text: string, format?: string) =>
-  parse(text, format ? format : 'yyyy-MM-dd', new Date())
+export const toDate = (text: string, format?: string) => parse(text, format ? format : 'yyyy-MM-dd', new Date())
 
-export const formatTime = (text: string, dateFormat: string) =>
-  format(new Date(text), dateFormat, { locale: ptBR })
+export const formatTime = (text: string, dateFormat: string) => format(new Date(text), dateFormat, { locale: ptBR })
 
 export const formatTooltip = (text: string, dateFormat?: string) =>
   format(new Date(text), dateFormat ? 'MMM/yy' : 'dd/MM/yyyy', {
-    locale: ptBR
+    locale: ptBR,
   })
 
-export const formatTooltipWithHours = (text: string) =>
-  format(new Date(text), 'dd/MM/yyyy HH:mm', { locale: ptBR })
+export const formatTooltipWithHours = (text: string) => format(new Date(text), 'dd/MM/yyyy HH:mm', { locale: ptBR })
 
 export const truncateLabel = (text: string, labelWordSize?: number) => {
   const numberOfLetters = labelWordSize ? labelWordSize : 12
   const lettersToShow = labelWordSize ? 3 : 4
 
-  return text.length > numberOfLetters
-    ? text.slice(0, numberOfLetters - lettersToShow) + '...'
-    : text
+  return text.length > numberOfLetters ? text.slice(0, numberOfLetters - lettersToShow) + '...' : text
 }
 
-export const truncateSpecialLabel = (text: string, size: number) =>
-  text.length > size ? text.slice(0, size - 3) + '...' : text
+export const truncateSpecialLabel = (text: string, size: number) => (text.length > size ? text.slice(0, size - 3) + '...' : text)
 
 export const getDomain = (item: TDomainValues) => {
   // TODO: improve this "pattern matching" xgh
@@ -166,8 +122,7 @@ export const getDomain = (item: TDomainValues) => {
   }
 }
 
-export const fixedDomain = (item: TDomainValues) =>
-  item.max >= 90 ? 100 : getDomain(item)
+export const fixedDomain = (item: TDomainValues) => (item.max >= 90 ? 100 : getDomain(item))
 
 export const getSaveAsImage = (title: string) => ({
   title,
@@ -175,24 +130,16 @@ export const getSaveAsImage = (title: string) => ({
   show: true,
   icon: DOWNLOAD_ICON,
   iconStyle,
-  excludeComponents: ['toolbox', 'dataZoom']
+  excludeComponents: ['toolbox', 'dataZoom'],
 })
 
-export const getSaveAsImageWithTitle = (
-  title: string,
-  setTitle: (show: boolean) => void
-) => ({
+export const getSaveAsImageWithTitle = (title: string, setTitle: (show: boolean) => void) => ({
   title,
   show: true,
   icon: DOWNLOAD_ICON,
   iconStyle,
-  onclick: (
-    item: { option: { title: { text: string }[] } },
-    chartInfo: { getConnectedDataURL: (opts: TConnectedDataURL) => string }
-  ) => {
-    const title = item.option.title.length > 0
-      ? item.option.title[0].text
-      : 'image'
+  onclick: (item: { option: { title: { text: string }[] } }, chartInfo: { getConnectedDataURL: (opts: TConnectedDataURL) => string }) => {
+    const title = item.option.title.length > 0 ? item.option.title[0].text : 'image'
 
     setTitle(true)
 
@@ -200,7 +147,7 @@ export const getSaveAsImageWithTitle = (
       type: 'jpg',
       backgroundColor: '#fff',
       connectedBackgroundColor: '#fff',
-      excludeComponents: ['toolbox', 'dataZoom']
+      excludeComponents: ['toolbox', 'dataZoom'],
     })
 
     const a = document.createElement('a')
@@ -211,41 +158,31 @@ export const getSaveAsImageWithTitle = (
     const event = new MouseEvent('click', {
       view: document.defaultView,
       bubbles: true,
-      cancelable: false
+      cancelable: false,
     })
 
     a.dispatchEvent(event)
 
     setTitle(false)
-  }
+  },
 })
 
 export const getDataView = (title: string) => ({
   title,
   show: true,
-  icon:
-    'path://M2 20h20v-4H2v4zm2-3h2v2H4v-2zM2 4v4h20V4H2zm4 ' +
-    '3H4V5h2v2zm-4 7h20v-4H2v4zm2-3h2v2H4v-2z',
+  icon: 'path://M2 20h20v-4H2v4zm2-3h2v2H4v-2zM2 4v4h20V4H2zm4 ' + '3H4V5h2v2zm-4 7h20v-4H2v4zm2-3h2v2H4v-2z',
   iconStyle: {
     color: '#152849',
     borderColor: '#152849',
-    borderWidth: 0.1
+    borderWidth: 0.1,
   },
   buttonColor: '#152849',
-  lang: [title, 'Voltar', 'Atualizar']
+  lang: [title, 'Voltar', 'Atualizar'],
 })
 
-export const formatMoneyLabel = (item: TDataTooltip) => formatToBRL(item.value)
-
-export const getInitialValues = (
-  arrayLength: number,
-  dateFormat?: string,
-  scrollStart?: number
-) => {
+export const getInitialValues = (arrayLength: number, dateFormat?: string, scrollStart?: number) => {
   if (scrollStart) {
-    return arrayLength > scrollStart
-      ? 100 - (scrollStart * 100) / arrayLength
-      : 0
+    return arrayLength > scrollStart ? 100 - (scrollStart * 100) / arrayLength : 0
   }
 
   const monthly = arrayLength > 30 ? 100 - 3000 / arrayLength : 0
@@ -254,11 +191,9 @@ export const getInitialValues = (
   return dateFormat !== 'yyyy-MM' ? monthly : yearly
 }
 
-export const getEndForecast = (arrayLength: number, lineMarkValue: number) =>
-  (lineMarkValue * 250) / arrayLength
+export const getEndForecast = (arrayLength: number, lineMarkValue: number) => (lineMarkValue * 250) / arrayLength
 
 // This function take a number and put on this the thousand separator ".", e.g.:
 // 1000 => 1.000
-// 1000000 => 1.000.000 
-export const thousandSeparator = (values: string | number) =>
-  values.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+// 1000000 => 1.000.000
+export const thousandSeparator = (values: string | number) => values.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')

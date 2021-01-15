@@ -28,10 +28,7 @@ export interface IDefaultChartProps {
   marginRightToolbox?: string
   titleFontSize?: number
   scrollStart?: number
-  onClickBar?(
-    itemProps?: Record<string, unknown>,
-    itemFunctions?: Record<string, unknown>
-  ): void
+  onClickBar?(itemProps?: Record<string, unknown>, itemFunctions?: Record<string, unknown>): void
 }
 
 export type TToolboxEntryProps = {
@@ -94,7 +91,7 @@ export type TSeries = {
   xAxisIndex?: number
   yAxisIndex?: number
   label?: TLabelProps
-  labelLine?: { show?: boolean, length?: number, length2?: number }
+  labelLine?: { show?: boolean; length?: number; length2?: number }
   areaStyle?: React.CSSProperties
   lineStyle?: React.CSSProperties & { type?: TLineStyleType }
   barGap?: string
@@ -119,15 +116,7 @@ export type TSeries = {
   radius?: string | [string, string]
   center?: [number, string] | [string, string] | string | number
   smooth?: boolean
-  data?:
-  | number[]
-  | string[]
-  | Date[]
-  | TPieChartData[]
-  | TEntryWithStyleData[]
-  | TPictorialEntryData[]
-  | TCostumizedSymbolData[]
-  | TTuple[]
+  data?: number[] | string[] | Date[] | TPieChartData[] | TEntryWithStyleData[] | TPictorialEntryData[] | TCostumizedSymbolData[] | TTuple[]
 }
 
 export type TCostumizedSymbolData = {
@@ -147,21 +136,11 @@ export type TPieDataLabel = {
 
 type TFormatterReturn = string[] | string | number
 
-type TFormatterEntry =
-  | string
-  | number
-  | TDomainValues
-  | TDataTooltip
-  | TDataTooltip[]
-  | TPieDataLabel
+type TFormatterEntry = string | number | TDomainValues | TDataTooltip | TDataTooltip[] | TPieDataLabel
 
-export type TFormatterType =
-  | string
-  | ((item: TFormatterEntry | TAudiometryDataTooltip[]) => TFormatterReturn)
+export type TFormatterType = string | ((item: TFormatterEntry | TAudiometryDataTooltip[]) => TFormatterReturn)
 
-export type TFormatterSliderType =
-  | string
-  | ((yValue: string, xValue: string) => TFormatterReturn)
+export type TFormatterSliderType = string | ((yValue: string, xValue: string) => TFormatterReturn)
 
 export type TPositionType =
   | 'top'
@@ -289,15 +268,9 @@ export type TAxisProps = {
   name?: string
   nameGap?: number
   type?: TChartType
-  nameTextStyle?: { padding?: number[], verticalAlign?: string }
+  nameTextStyle?: { padding?: number[]; verticalAlign?: string }
   boundaryGap?: boolean
-  data?:
-  | number[]
-  | string[]
-  | Date[]
-  | TPieChartData[]
-  | TEntryWithStyleData[]
-  | { name: string }[]
+  data?: number[] | string[] | Date[] | TPieChartData[] | TEntryWithStyleData[] | { name: string }[]
   gridIndex?: number
   showGrid?: boolean
   splitLine?: TSplitLineProps
@@ -341,7 +314,7 @@ export type TLegendProps = {
   y?: 'center' | 'bottom'
   icon?: 'line' | 'rect' | 'shape'
   top?: number
-  data: string[] | { name: string, icon?: string }[]
+  data: string[] | { name: string; icon?: string }[]
   itemGap?: number
   selectedMode?: boolean
   color?: string[]
@@ -383,7 +356,7 @@ export type TParamsTooltip = {
 }
 
 export type TAudiometryDataTooltip = {
-  data?: { value: number | string, boneValue: number | string }
+  data?: { value: number | string; boneValue: number | string }
   axisValue?: string
 }
 

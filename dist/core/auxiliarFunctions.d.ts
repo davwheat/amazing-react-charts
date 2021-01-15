@@ -17,7 +17,6 @@ export declare const mountMessage: (value: TDataTooltip, complement: string, axi
 export declare const toDate: (text: string, format?: string) => Date;
 export declare const formatTime: (text: string, dateFormat: string) => string;
 export declare const formatTooltip: (text: string, dateFormat?: string) => string;
-export declare const formatTooltipWithHours: (text: string) => string;
 export declare const truncateLabel: (text: string, labelWordSize?: number) => string;
 export declare const truncateSpecialLabel: (text: string, size: number) => string;
 export declare const getDomain: (item: TDomainValues) => number;

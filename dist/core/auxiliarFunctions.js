@@ -5,15 +5,11 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.thousandSeparator = exports.getEndForecast = exports.getInitialValues = exports.getDataView = exports.getSaveAsImageWithTitle = exports.getSaveAsImage = exports.fixedDomain = exports.getDomain = exports.truncateSpecialLabel = exports.truncateLabel = exports.formatTooltipWithHours = exports.formatTooltip = exports.formatTime = exports.toDate = exports.mountMessage = exports.monuntTimeMessage = exports.moneyPercent = exports.getPercentage = exports.takeComplement = exports.formatValueAxis = exports.timeConvert = exports.takeDonutComplement = exports.takeLabelComplement = void 0;
-
-var _format = _interopRequireDefault(require("date-fns/format"));
+exports.thousandSeparator = exports.getEndForecast = exports.getInitialValues = exports.getDataView = exports.getSaveAsImageWithTitle = exports.getSaveAsImage = exports.fixedDomain = exports.getDomain = exports.truncateSpecialLabel = exports.truncateLabel = exports.formatTooltip = exports.formatTime = exports.toDate = exports.mountMessage = exports.monuntTimeMessage = exports.moneyPercent = exports.getPercentage = exports.takeComplement = exports.formatValueAxis = exports.timeConvert = exports.takeDonutComplement = exports.takeLabelComplement = void 0;
 
 var _parse = _interopRequireDefault(require("date-fns/parse"));
 
 var _takeLast = _interopRequireDefault(require("ramda/es/takeLast"));
-
-var _ptBR = _interopRequireDefault(require("date-fns/locale/pt-BR"));
 
 var DOWNLOAD_ICON = 'path://M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 ' + '.67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z';
 var iconStyle = {
@@ -94,28 +90,16 @@ var toDate = function toDate(text, format) {
 exports.toDate = toDate;
 
 var formatTime = function formatTime(text, dateFormat) {
-  return (0, _format.default)(new Date(text), dateFormat, {
-    locale: _ptBR.default
-  });
+  return text;
 };
 
 exports.formatTime = formatTime;
 
 var formatTooltip = function formatTooltip(text, dateFormat) {
-  return (0, _format.default)(new Date(text), dateFormat ? 'MMM/yy' : 'dd/MM/yyyy', {
-    locale: _ptBR.default
-  });
+  return text;
 };
 
 exports.formatTooltip = formatTooltip;
-
-var formatTooltipWithHours = function formatTooltipWithHours(text) {
-  return (0, _format.default)(new Date(text), 'dd/MM/yyyy HH:mm', {
-    locale: _ptBR.default
-  });
-};
-
-exports.formatTooltipWithHours = formatTooltipWithHours;
 
 var truncateLabel = function truncateLabel(text, labelWordSize) {
   var numberOfLetters = labelWordSize ? labelWordSize : 12;

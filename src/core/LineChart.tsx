@@ -180,7 +180,7 @@ const LineChart = (props: IProps) => {
       textStyle: {
         fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
         fontSize: 16,
-        fontWeight: '400' as const,
+        fontWeight: 400 as const,
       },
     },
     dataZoom: scrollable,

@@ -21,9 +21,9 @@ var _echarts = _interopRequireDefault(require("echarts/lib/echarts"));
 
 require("echarts/lib/chart/line");
 
-require("echarts/lib/chart/bar");
-
 require("echarts/lib/component/tooltip");
+
+require("echarts/lib/component/legend");
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 

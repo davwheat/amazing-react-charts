@@ -3,6 +3,7 @@ import { IDefaultChartProps, TEntryDataLine } from './types';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/legend';
+import 'echarts/lib/component/toolbox';
 interface IProps extends Omit<IDefaultChartProps, 'data'> {
     data: TEntryDataLine[];
     colors?: string[];
